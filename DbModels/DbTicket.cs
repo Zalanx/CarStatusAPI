@@ -1,6 +1,6 @@
 ﻿namespace CarStatusAPI.Models
 {
-    public class Ticket
+    public class DbTicket
     {
         public int Id { get; set; }
 
