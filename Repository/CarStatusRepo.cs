@@ -1,9 +1,33 @@
 ﻿using CarStatusAPI.Interface;
+using CarStatusAPI.Models;
 
 namespace CarStatusAPI.Repository
 {
     public class CarStatusRepo : ICarStatus
     {
+        public Task<List<DbTicket>> GetAlTickets()
+        {
+            throw new NotImplementedException();
+        }
 
+        public Task<DbTicket> GetTicket(int ticketId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<DbTicket> CreateNewTicket()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<DbUser> LoginUser(string username, string password)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<DbUser> RegisterNewUser(string Username, string Password)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
