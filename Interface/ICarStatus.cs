@@ -8,11 +8,8 @@ namespace CarStatusAPI.Interface
         Task<DbTicket> GetTicket(int ticketId);
         Task<DbTicket> CreateNewTicket();
 
-        Task<DbUser> LoginUser(string username, string password);
-        Task<DbUser> RegisterNewUser(string Username, string Password);
+        Task<DbUser> LoginUser(DbUser user);
+        Task<DbUser> RegisterNewUser(DbUser user);
 
-        
-
-
-    }S
+    }
 }

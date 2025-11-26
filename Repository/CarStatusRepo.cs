@@ -20,12 +20,12 @@ namespace CarStatusAPI.Repository
             throw new NotImplementedException();
         }
 
-        public Task<DbUser> LoginUser(string username, string password)
+        public Task<DbUser> LoginUser(DbUser user)
         {
             throw new NotImplementedException();
         }
 
-        public Task<DbUser> RegisterNewUser(string Username, string Password)
+        public Task<DbUser> RegisterNewUser(DbUser user)
         {
             throw new NotImplementedException();
         }
