@@ -1,11 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace CarStatusAPI.Models
+namespace CarStatusAPI.ApiModels
 {
-    public class DbUser
+    public class User
     {
-        public int Id { get; set; }
-
         [Required]
         public string Username { get; set; }
 

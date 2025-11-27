@@ -1,46 +1,39 @@
-﻿using CarStatusAPI.ApiModels;
+﻿using AutoMapper;
+using CarStatusAPI.ApiModels;
 using CarStatusAPI.Interface;
 using CarStatusAPI.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace CarStatusAPI.Repository
 {
-    public class CarStatusRepo(CarStatusDbContext dbContext) : ICarStatus
+    public class CarStatusRepo(CarStatusDbContext dbContext, IMapper mapper) : ICarStatus
     {
-        public Task<List<Ticket>> GetAlTickets()
+        public async Task<List<Ticket>> GetAlTickets()
         {
-            List<Ticket> tickets = new List<Ticket>();
+            var dbTicket = dbContext.DbTickets.ToListAsync();
 
-            foreach (var ticket in dbContext.DbTickets)
-            {
-                var newticket = new Ticket()
-                {
-                    Car = ticket.Car,
-                    CarStatus = ticket.CarStatus,
-                    CustomerName = ticket.CustomerName,
-                    ToDos = ticket.ToDos
-                };
-
-                tickets.Add(newticket);
-                return tickets;
-            }
+            return mapper.Map<List<Ticket>>(dbTicket);
         }
 
-        public Task<Ticket> GetTicket(int ticketId)
+        public async Task<Ticket> GetTicket(int ticketId)
+        {
+
+            //Hier fehlt die Id -> AutoMapper 
+
+            throw new NotImplementedException();
+        }
+
+        public async Task<Ticket> CreateNewTicket()
         {
             throw new NotImplementedException();
         }
 
-        public Task<Ticket> CreateNewTicket()
+        public async Task<DbUser> LoginUser(DbUser user)
         {
             throw new NotImplementedException();
         }
 
-        public Task<DbUser> LoginUser(DbUser user)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<DbUser> RegisterNewUser(DbUser user)
+        public async Task<DbUser> RegisterNewUser(DbUser user)
         {
             throw new NotImplementedException();
         }
