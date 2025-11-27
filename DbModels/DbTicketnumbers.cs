@@ -1,18 +1,26 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Runtime.InteropServices.JavaScript;
 
-namespace CarStatusAPI.ApiModels
+namespace CarStatusAPI.DbModels
 {
-    public class Ticketnumbers
+    public class DbTicketnumbers
     {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
+        [Required]
         public DateTime ChangedDate { get; set; }
 
+        [Required]
+        [StringLength(30)]
         public string Current_Ticketnumber { get; set; }
 
+        [Required]
+        [StringLength(10)]
         public string Prefix { get; set; }
+
+
 
     }
 }

@@ -15,11 +15,8 @@ namespace CarStatusAPI.Repository
             return mapper.Map<List<Ticket>>(dbTicket);
         }
 
-        public async Task<Ticket> GetTicket(int ticketId)
+        public async Task<Ticket> GetTicket(int ticketNumber)
         {
-
-            //Hier fehlt die Id -> AutoMapper 
-
             throw new NotImplementedException();
         }
 
