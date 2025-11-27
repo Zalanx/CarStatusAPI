@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using CarStatusAPI.DbModels;
+using Microsoft.EntityFrameworkCore;
 
 namespace CarStatusAPI.Models
 {
@@ -21,7 +22,7 @@ namespace CarStatusAPI.Models
 
         public DbSet<DbTicket> DbTickets { get; set; }
         public DbSet<DbUser> DbUsers { get; set; }
-        public DbSet<DbUser> DbTicketNumbers { get; set; }
+        public DbSet<DbTicketnumbers> DbTicketNumbers { get; set; }
 
 
         //TODO: Hier noch ein update der Datenbank machen und die properties vom Ticketnumbers

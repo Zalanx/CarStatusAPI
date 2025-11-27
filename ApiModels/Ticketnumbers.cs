@@ -6,7 +6,6 @@ namespace CarStatusAPI.ApiModels
 {
     public class Ticketnumbers
     {
-        public int Id { get; set; }
 
         public DateTime ChangedDate { get; set; }
 
