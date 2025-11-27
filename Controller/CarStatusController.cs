@@ -1,4 +1,5 @@
-﻿using CarStatusAPI.Models;
+﻿using CarStatusAPI.Interface;
+using CarStatusAPI.Models;
 using CarStatusAPI.Repository;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,13 +8,13 @@ namespace CarStatusAPI.Controller
 
     [Route("api/CarStatus")]
     [ApiController]
-    public class CarStatusController(CarStatusRepo repo) : ControllerBase
+    public class CarStatusController(ICarStatus repo) : ControllerBase
     {
 
         [HttpGet("GetAllTickets")]
-        public async Task GetSalesOrders()
+        public async Task GetAllTickets()
         {
-            await repo.GetAlTickets();
+            await repo.GetAllTickets();
         }
 
 
@@ -39,6 +40,12 @@ namespace CarStatusAPI.Controller
         public async Task RegisterNewUser(DbUser user)
         {
             await repo.RegisterNewUser(user);
+        }
+
+        [HttpPost("ResetTicketNumbers")]
+        public async Task ResetTicketNumbers()
+        {
+            await repo._ResetTicketNumbers();
         }
 
     }

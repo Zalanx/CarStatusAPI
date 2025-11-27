@@ -9,7 +9,8 @@ namespace CarStatusAPI.Repository
 {
     public class CarStatusRepo(CarStatusDbContext dbContext, IMapper mapper) : ICarStatus
     {
-        public async Task<List<Ticket>> GetAlTickets()
+
+        public async Task<List<Ticket>> GetAllTickets()
         {
             var dbTicket = dbContext.DbTickets.ToListAsync();
 
@@ -46,7 +47,6 @@ namespace CarStatusAPI.Repository
                 Current_Ticketnumber = $"{prefix}20210",
                 Prefix = prefix
             };
-
 
             var newDbTicket = mapper.Map<DbTicketnumbers>(newTicket);
             dbContext.DbTicketNumbers.Add(newDbTicket);
