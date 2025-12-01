@@ -1,5 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using CarStatusAPI.ApiModels;
+using CarStatusAPI.DbModels;
 
 namespace CarStatusAPI.Models
 {
@@ -10,6 +12,8 @@ namespace CarStatusAPI.Models
         [Required]
         public int Id { get; set; }
 
+
+        [ForeignKey(nameof(Ticketnumbers))]
         [Required]
         [StringLength(50)]
         public int Ticketnumber { get; set; }
@@ -28,5 +32,8 @@ namespace CarStatusAPI.Models
 
         [Required]
         public List<string> ToDos { get; set; }
+
+
+        public virtual DbTicketnumber Ticketnumbers { get; set; }
     }
 }

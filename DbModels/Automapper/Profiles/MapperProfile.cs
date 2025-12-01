@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using CarStatusAPI.ApiModels;
+using CarStatusAPI.DbModels;
 using CarStatusAPI.Models;
 
 
@@ -12,6 +13,7 @@ namespace DiabloModels.AutoMapper.Profiles
 
             CreateMap<DbTicket, Ticket>().ReverseMap();
             CreateMap<DbUser, User>().ReverseMap();
+            CreateMap<DbTicketnumber, Ticketnumber>().ReverseMap();
 
         }
     }

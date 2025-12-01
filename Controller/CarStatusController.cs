@@ -1,4 +1,5 @@
-﻿using CarStatusAPI.Interface;
+﻿using CarStatusAPI.ApiModels;
+using CarStatusAPI.Interface;
 using CarStatusAPI.Models;
 using CarStatusAPI.Repository;
 using Microsoft.AspNetCore.Mvc;
@@ -12,40 +13,40 @@ namespace CarStatusAPI.Controller
     {
 
         [HttpGet("GetAllTickets")]
-        public async Task GetAllTickets()
+        public async Task<List<Ticket>> GetAllTickets()
         {
-            await repo.GetAllTickets();
+           return await repo.GetAllTickets();
         }
 
 
         [HttpGet("GetTicketById")]
-        public async Task GetTicket(int ticketId)
+        public async Task<Ticket> GetTicket(int ticketId)
         {
-            await repo.GetTicket(ticketId);
+            return await repo.GetTicket(ticketId);
         }
 
         [HttpPost("CreateTicket")]
-        public async Task CreateNewTicket()
+        public async Task<DbTicket> CreateNewTicket(Ticket ticket)
         {
-            await repo.CreateNewTicket();
+            return await repo.CreateNewTicket(ticket);
         }
 
         [HttpPost("LoginUser")]
-        public async Task LoginUser(DbUser user)
+        public async Task<DbUser> LoginUser(DbUser user)
         {
-            await repo.LoginUser(user);
+            return await repo.LoginUser(user);
         }
 
         [HttpPost("RegisterUser")]
-        public async Task RegisterNewUser(DbUser user)
+        public async Task<DbUser> RegisterNewUser(DbUser user)
         {
-            await repo.RegisterNewUser(user);
+            return await repo.RegisterNewUser(user);
         }
 
         [HttpPost("ResetTicketNumbers")]
         public async Task ResetTicketNumbers()
         {
-            await repo._ResetTicketNumbers();
+            await repo.ResetTicketNumbers();
         }
 
     }

@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CarStatusAPI.DbModels
 {
-    public class DbTicketnumbers
+    public class DbTicketnumber
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

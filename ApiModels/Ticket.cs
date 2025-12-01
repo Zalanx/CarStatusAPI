@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using CarStatusAPI.DbModels.Enums;
 
 namespace CarStatusAPI.ApiModels
 {
@@ -10,7 +11,7 @@ namespace CarStatusAPI.ApiModels
 
         public string Car { get; set; }
 
-        public string CarStatus { get; set; }
+        public CarStatusEnum CarStatus { get; set; }
 
         public List<string> ToDos { get; set; }
     }

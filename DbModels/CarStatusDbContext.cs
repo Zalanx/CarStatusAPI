@@ -18,14 +18,12 @@ namespace CarStatusAPI.Models
             {
                 optionsBuilder.UseSqlServer("Server=NB0432\\SQLEXPRESS;Database=CarStatusDb;Trusted_Connection=True;TrustServerCertificate=True;");
             }
-        }
+        } 
 
         public DbSet<DbTicket> DbTickets { get; set; }
         public DbSet<DbUser> DbUsers { get; set; }
-        public DbSet<DbTicketnumbers> DbTicketNumbers { get; set; }
+        public DbSet<DbTicketnumber> DbTicketNumbers { get; set; }
 
-
-        //TODO: Hier noch ein update der Datenbank machen und die properties vom Ticketnumbers
 
     }
 }

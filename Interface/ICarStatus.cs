@@ -7,11 +7,13 @@ namespace CarStatusAPI.Interface
     {
         Task<List<Ticket>> GetAllTickets();
         Task<Ticket> GetTicket(int ticketId);
-        Task<Ticket> CreateNewTicket();
+        Task<DbTicket> CreateNewTicket(Ticket ticket);
+
+        Task<Ticket> UpdateTicket(Ticket ticket);
 
         Task<DbUser> LoginUser(DbUser user);
         Task<DbUser> RegisterNewUser(DbUser user);
 
-        Task _ResetTicketNumbers();
+        Task ResetTicketNumbers();
     }
 }
