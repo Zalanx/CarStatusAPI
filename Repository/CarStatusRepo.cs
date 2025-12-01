@@ -36,7 +36,7 @@ namespace CarStatusAPI.Repository
                 CustomerName = ticket.CustomerName,
                 Car = ticket.Car,
                 CarStatus = CarStatusEnum.Warteschlange,
-                ToDos = new List<string>()
+                ToDos = ticket.ToDos
             };
 
             var CreatedDbTicket = mapper.Map<DbTicket>(createdTicket);
