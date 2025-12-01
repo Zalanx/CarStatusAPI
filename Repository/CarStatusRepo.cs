@@ -76,7 +76,7 @@ namespace CarStatusAPI.Repository
 
         public async Task RegisterNewUser(User user)
         {
-            var existingUser = dbContext.DbUsers.FirstOrDefaultAsync(u => u.Username == user.Username);
+            var existingUser = await dbContext.DbUsers.FirstOrDefaultAsync(u => u.Username == user.Username);
             if (existingUser != null)
             {
                 throw new Exception("Username already exists");
@@ -97,6 +97,8 @@ namespace CarStatusAPI.Repository
                 IsAdmin = false,
             };
 
+            var newDbUser = mapper.Map<DbUser>(newUser);
+            dbContext.Add(newDbUser);
             await dbContext.SaveChangesAsync();
 
 
