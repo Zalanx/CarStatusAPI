@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CarStatusAPI.Repository
 {
-    public class CarStatusRepo(CarStatusDbContext dbContext, IMapper mapper) : ICarStatus
+    public class CarStatusRepo(CarStatusDbContext dbContext, IMapper mapper, CarStatusRepoHelper helper) : ICarStatus
     {
 
         public async Task<List<Ticket>> GetAllTickets()
@@ -28,7 +28,7 @@ namespace CarStatusAPI.Repository
         public async Task<DbTicket> CreateNewTicket(Ticket ticket)
         {
 
-            var newTicketNumber = await NewTicketNumber();
+            var newTicketNumber = await helper.NewTicketNumber();
 
             var createdTicket = new Ticket()
             {
@@ -58,55 +58,30 @@ namespace CarStatusAPI.Repository
             return mapper.Map<Ticket>(dbTicket);
         }
 
-        public async Task<DbUser> LoginUser(DbUser user)
+        public async Task<DbUser> LoginUser(User user)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<DbUser> RegisterNewUser(DbUser user)
+        public async Task<DbUser> RegisterNewUser(User user)
         {
-            throw new NotImplementedException();
-        }
+            var salt = helper.GenerateSalt();
 
-        public async Task ResetTicketNumbers()
-        {
-            string prefix = "WT-";
-
-            var newTicket = new Ticketnumber()
+            var newUser = new User()
             {
-                ChangedDate = DateTime.Now,
-                Current_Ticketnumber = $"{prefix}20210",
-                Prefix = prefix
+                CustomerName = user.CustomerName,
+                Username = user.Username,
+                Password = Convert.ToBase64String(helper.HashPassword(user.Password,salt)),
+                IsAdmin = false,
             };
 
-            var newDbTicket = mapper.Map<DbTicketnumber>(newTicket);
-            dbContext.DbTicketNumbers.Add(newDbTicket);
-            await dbContext.SaveChangesAsync();
+
+
+
+            throw new NotImplementedException();
         }
 
-        private async Task<String> NewTicketNumber()
-        {
-            var currentDbTicketNumber = await dbContext.DbTicketNumbers.FirstOrDefaultAsync() ?? throw new Exception("No Ticket");
-            var currentTicketNumber = mapper.Map<Ticketnumber>(currentDbTicketNumber);
-
-            var oldTicketNumber = currentTicketNumber.Current_Ticketnumber;
-            var prefix = currentTicketNumber.Prefix;
-
-
-            var replacedNumber = oldTicketNumber.Replace(prefix, "");
-            int numberParse = int.Parse(replacedNumber);
-            int newTicketNumber = numberParse + 1;
-
-            var TicketNumber = $"{prefix}{newTicketNumber}";
-
-
-            var dbTicketNumbers =  await dbContext.DbTicketNumbers.FirstOrDefaultAsync();
-            dbTicketNumbers!.Current_Ticketnumber = TicketNumber;
-            await dbContext.SaveChangesAsync();
-
-            return TicketNumber;
-
-        }
+        
 
     }
 }

@@ -33,13 +33,13 @@ namespace CarStatusAPI.Controller
         }
 
         [HttpPost("LoginUser")]
-        public async Task<DbUser> LoginUser(DbUser user)
+        public async Task<DbUser> LoginUser(User user)
         {
             return await repo.LoginUser(user);
         }
 
         [HttpPost("RegisterUser")]
-        public async Task<DbUser> RegisterNewUser(DbUser user)
+        public async Task<DbUser> RegisterNewUser(User user)
         {
             return await repo.RegisterNewUser(user);
         }
@@ -50,11 +50,6 @@ namespace CarStatusAPI.Controller
             return await repo.UpdateTicket(ticketnumber, newCarStatus);
         }
 
-        [HttpDelete("ResetTicketNumbers")]
-        public async Task ResetTicketNumbers()
-        {
-            await repo.ResetTicketNumbers();
-        }
 
     }
 }

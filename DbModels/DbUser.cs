@@ -19,6 +19,8 @@ namespace CarStatusAPI.Models
         [StringLength(30)]
         public string Password { get; set; }
 
+        public string? Salt { get; set; }
+
         [Required]
         public bool IsAdmin { get; set; }
     }
