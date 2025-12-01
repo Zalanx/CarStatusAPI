@@ -13,6 +13,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<ICarStatus, CarStatusRepo>();
+builder.Services.AddScoped<CarStatusRepoHelper>();
 
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
