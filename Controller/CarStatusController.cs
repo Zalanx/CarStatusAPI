@@ -39,9 +39,9 @@ namespace CarStatusAPI.Controller
         }
 
         [HttpPost("RegisterUser")]
-        public async Task<DbUser> RegisterNewUser(User user)
-        {
-            return await repo.RegisterNewUser(user);
+        public async Task RegisterNewUser(User user)
+        { 
+            await repo.RegisterNewUser(user);
         }
 
         [HttpPatch("UpdateTicket")]

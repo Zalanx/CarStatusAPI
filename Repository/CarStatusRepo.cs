@@ -63,8 +63,19 @@ namespace CarStatusAPI.Repository
             throw new NotImplementedException();
         }
 
-        public async Task<DbUser> RegisterNewUser(User user)
+        public async Task RegisterNewUser(User user)
         {
+            var existingUser = dbContext.DbUsers.FirstOrDefaultAsync(u => u.Username == user.Username);
+            if (existingUser != null)
+            {
+                throw new Exception("Username already exists");
+            }
+
+            if (string.IsNullOrWhiteSpace(user.Password))
+            {
+                throw new Exception("You need a password to register");
+            }
+
             var salt = helper.GenerateSalt();
 
             var newUser = new User()
@@ -75,10 +86,9 @@ namespace CarStatusAPI.Repository
                 IsAdmin = false,
             };
 
+            await dbContext.SaveChangesAsync();
 
 
-
-            throw new NotImplementedException();
         }
 
         

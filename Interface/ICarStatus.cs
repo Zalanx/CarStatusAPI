@@ -13,7 +13,7 @@ namespace CarStatusAPI.Interface
         Task<Ticket> UpdateTicket(string ticketnumber, CarStatusEnum newCarStatus);
 
         Task<DbUser> LoginUser(User user);
-        Task<DbUser> RegisterNewUser(User user);
+        Task RegisterNewUser(User user);
 
     }
 }
