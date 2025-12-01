@@ -24,6 +24,12 @@ namespace CarStatusAPI.Models
         public DbSet<DbUser> DbUsers { get; set; }
         public DbSet<DbTicketnumber> DbTicketNumbers { get; set; }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<DbTicket>()
+                .Property(t => t.CarStatus)
+                .HasConversion<string>();
+        }
 
     }
 }
