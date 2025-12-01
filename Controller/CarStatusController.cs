@@ -44,7 +44,7 @@ namespace CarStatusAPI.Controller
             return await repo.RegisterNewUser(user);
         }
 
-        [HttpPut("UpdateTicket")]
+        [HttpPatch("UpdateTicket")]
         public async Task<Ticket> UpdateTicket(string ticketnumber, CarStatusEnum newCarStatus)
         {
             return await repo.UpdateTicket(ticketnumber, newCarStatus);

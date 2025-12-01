@@ -53,10 +53,9 @@ namespace CarStatusAPI.Repository
             var dbTicket = await dbContext.DbTickets.FirstOrDefaultAsync(t => t.Ticketnumber == ticketnumber) ?? throw new Exception($"Ticket not found with ticketnumber {ticketnumber}");
 
             dbTicket.CarStatus = newCarStatus;
+            await dbContext.SaveChangesAsync();
 
-
-
-            throw new NotImplementedException();
+            return mapper.Map<Ticket>(dbTicket);
         }
 
         public async Task<DbUser> LoginUser(DbUser user)
