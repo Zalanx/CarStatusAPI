@@ -48,8 +48,14 @@ namespace CarStatusAPI.Repository
             return CreatedDbTicket;
         }
 
-        public async Task<Ticket> UpdateTicket(Ticket ticket)
+        public async Task<Ticket> UpdateTicket(string ticketnumber, CarStatusEnum newCarStatus)
         {
+            var dbTicket = await dbContext.DbTickets.FirstOrDefaultAsync(t => t.Ticketnumber == ticketnumber) ?? throw new Exception($"Ticket not found with ticketnumber {ticketnumber}");
+
+            dbTicket.CarStatus = newCarStatus;
+
+
+
             throw new NotImplementedException();
         }
 

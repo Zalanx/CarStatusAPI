@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using CarStatusAPI.ApiModels;
 using CarStatusAPI.DbModels;
+using CarStatusAPI.DbModels.Enums;
 
 namespace CarStatusAPI.Models
 {
@@ -24,8 +25,7 @@ namespace CarStatusAPI.Models
         public string Car {  get; set; }
 
         [Required]
-        [StringLength(30)]
-        public string CarStatus { get; set; }
+        public CarStatusEnum CarStatus { get; set; }
 
         [Required]
         public List<string> ToDos { get; set; }

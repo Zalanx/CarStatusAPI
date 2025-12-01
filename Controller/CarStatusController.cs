@@ -1,4 +1,5 @@
 ﻿using CarStatusAPI.ApiModels;
+using CarStatusAPI.DbModels.Enums;
 using CarStatusAPI.Interface;
 using CarStatusAPI.Models;
 using CarStatusAPI.Repository;
@@ -43,7 +44,13 @@ namespace CarStatusAPI.Controller
             return await repo.RegisterNewUser(user);
         }
 
-        [HttpPost("ResetTicketNumbers")]
+        [HttpPut("UpdateTicket")]
+        public async Task<Ticket> UpdateTicket(string ticketnumber, CarStatusEnum newCarStatus)
+        {
+            return await repo.UpdateTicket(ticketnumber, newCarStatus);
+        }
+
+        [HttpDelete("ResetTicketNumbers")]
         public async Task ResetTicketNumbers()
         {
             await repo.ResetTicketNumbers();
