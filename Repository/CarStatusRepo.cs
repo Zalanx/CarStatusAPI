@@ -60,7 +60,18 @@ namespace CarStatusAPI.Repository
 
         public async Task<DbUser> LoginUser(User user)
         {
-            throw new NotImplementedException();
+            var dbUser = await dbContext.DbUsers.FirstOrDefaultAsync(u => u.Username == user.Username) ??
+                         throw new Exception("No User found. Wrong Username");
+
+            var isCorrectPassword = helper.CompareHashedPasswords(user.Password, dbUser.Password,
+                Convert.FromBase64String(dbUser.Salt!));
+
+            if (isCorrectPassword == false)
+            {
+                throw new Exception("Wrong password");
+            }
+
+            return dbUser;
         }
 
         public async Task RegisterNewUser(User user)
@@ -82,7 +93,7 @@ namespace CarStatusAPI.Repository
             {
                 CustomerName = user.CustomerName,
                 Username = user.Username,
-                Password = Convert.ToBase64String(helper.HashPassword(user.Password,salt)),
+                Password = Convert.ToBase64String(helper.HashPassword(user.Password, salt)),
                 IsAdmin = false,
             };
 
@@ -91,7 +102,7 @@ namespace CarStatusAPI.Repository
 
         }
 
-        
+
 
     }
 }
