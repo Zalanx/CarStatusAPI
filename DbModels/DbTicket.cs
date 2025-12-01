@@ -12,11 +12,8 @@ namespace CarStatusAPI.Models
         [Required]
         public int Id { get; set; }
 
-
-        [ForeignKey(nameof(Ticketnumbers))]
-        [Required]
         [StringLength(50)]
-        public int Ticketnumber { get; set; }
+        public string Ticketnumber { get; set; }
 
         [Required]
         [StringLength(50)]
@@ -33,7 +30,5 @@ namespace CarStatusAPI.Models
         [Required]
         public List<string> ToDos { get; set; }
 
-
-        public virtual DbTicketnumber Ticketnumbers { get; set; }
     }
 }

@@ -6,7 +6,7 @@ namespace CarStatusAPI.Interface
     public interface ICarStatus
     {
         Task<List<Ticket>> GetAllTickets();
-        Task<Ticket> GetTicket(int ticketId);
+        Task<Ticket> GetTicket(string ticketId);
         Task<DbTicket> CreateNewTicket(Ticket ticket);
 
         Task<Ticket> UpdateTicket(Ticket ticket);

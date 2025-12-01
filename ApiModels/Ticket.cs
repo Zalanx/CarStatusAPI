@@ -1,18 +1,21 @@
-﻿using System.ComponentModel.DataAnnotations;
-using CarStatusAPI.DbModels.Enums;
+﻿using CarStatusAPI.DbModels.Enums;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace CarStatusAPI.ApiModels
 {
     public class Ticket
     {
-        public int Ticketnumber { get; set; }
+        [JsonIgnore]
+        public string? Ticketnumber { get; set; }
 
-        public string CustomerName { get; set; }
+        public required string CustomerName { get; set; }
 
-        public string Car { get; set; }
+        public required string Car { get; set; }
 
         public CarStatusEnum CarStatus { get; set; }
 
-        public List<string> ToDos { get; set; }
+        public required List<string> ToDos { get; set; }
     }
 }

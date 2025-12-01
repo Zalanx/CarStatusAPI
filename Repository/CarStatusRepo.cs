@@ -18,7 +18,7 @@ namespace CarStatusAPI.Repository
             return mapper.Map<List<Ticket>>(dbTicket);
         }
 
-        public async Task<Ticket> GetTicket(int ticketNumber)
+        public async Task<Ticket> GetTicket(string ticketNumber)
         {
             var dbTicket = await dbContext.DbTickets.FirstOrDefaultAsync(t => t.Ticketnumber == ticketNumber) ?? throw new Exception("No ticket found with this Ticket number");
 
@@ -28,18 +28,24 @@ namespace CarStatusAPI.Repository
         public async Task<DbTicket> CreateNewTicket(Ticket ticket)
         {
 
+            var newTicketNumber = await NewTicketNumber();
+
             var createdTicket = new Ticket()
             {
-                
+                Ticketnumber = newTicketNumber,
                 CustomerName = ticket.CustomerName,
                 Car = ticket.Car,
                 CarStatus = CarStatusEnum.Warteschlange,
                 ToDos = new List<string>()
             };
 
+            var CreatedDbTicket = mapper.Map<DbTicket>(createdTicket);
 
 
-            throw new NotImplementedException();
+            dbContext.DbTickets.Add(CreatedDbTicket);
+            await dbContext.SaveChangesAsync();
+
+            return CreatedDbTicket;
         }
 
         public async Task<Ticket> UpdateTicket(Ticket ticket)
@@ -72,5 +78,30 @@ namespace CarStatusAPI.Repository
             dbContext.DbTicketNumbers.Add(newDbTicket);
             await dbContext.SaveChangesAsync();
         }
+
+        private async Task<String> NewTicketNumber()
+        {
+            var currentDbTicketNumber = await dbContext.DbTicketNumbers.FirstOrDefaultAsync() ?? throw new Exception("No Ticket");
+            var currentTicketNumber = mapper.Map<Ticketnumber>(currentDbTicketNumber);
+
+            var oldTicketNumber = currentTicketNumber.Current_Ticketnumber;
+            var prefix = currentTicketNumber.Prefix;
+
+
+            var replacedNumber = oldTicketNumber.Replace(prefix, "");
+            int numberParse = int.Parse(replacedNumber);
+            int newTicketNumber = numberParse + 1;
+
+            var TicketNumber = $"{prefix}{newTicketNumber}";
+
+
+            var dbTicketNumbers =  await dbContext.DbTicketNumbers.FirstOrDefaultAsync();
+            dbTicketNumbers!.Current_Ticketnumber = TicketNumber;
+            await dbContext.SaveChangesAsync();
+
+            return TicketNumber;
+
+        }
+
     }
 }
