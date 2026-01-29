@@ -25,8 +25,5 @@ namespace CarStatusAPI.Models
 
         [Required]
         public bool IsAdmin { get; set; }
-
-        [Required]
-        public List<ToDoDto> ToDos { get; set; }
     }
 }

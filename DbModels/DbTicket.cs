@@ -28,7 +28,7 @@ namespace CarStatusAPI.Models
         public CarStatusEnum CarStatus { get; set; }
 
         [Required]
-        public List<string> ToDos { get; set; }
+        public List<DbToDos> ToDos { get; set; }
 
     }
 }

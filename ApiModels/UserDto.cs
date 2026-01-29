@@ -6,6 +6,7 @@ namespace CarStatusAPI.ApiModels
 {
     public class UserDto
     {
+        [JsonIgnore]
         public required string CustomerName { get; set; }
         public required string Username { get; set; }
         public required string Password { get; set; }
