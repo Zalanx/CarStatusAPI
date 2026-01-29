@@ -14,40 +14,40 @@ namespace CarStatusAPI.Controller
     {
 
         [HttpGet("GetAllTickets")]
-        public async Task<List<Ticket>> GetAllTickets()
+        public async Task<List<TicketDto>> GetAllTickets()
         {
            return await repo.GetAllTickets();
         }
 
 
         [HttpGet("GetTicketById")]
-        public async Task<Ticket> GetTicket(string ticketId)
+        public async Task<TicketDto> GetTicket(string ticketId)
         {
             return await repo.GetTicket(ticketId);
         }
 
         [HttpPost("CreateTicket")]
-        public async Task<DbTicket> CreateNewTicket(Ticket ticket)
+        public async Task<TicketDto> CreateNewTicket(CreateTicketDto ticket)
         {
             return await repo.CreateNewTicket(ticket);
         }
 
         [HttpPost("LoginUser")]
-        public async Task<DbUser> LoginUser(User user)
+        public async Task<DbUser> LoginUser(UserDto user)
         {
             return await repo.LoginUser(user);
         }
 
         [HttpPost("RegisterUser")]
-        public async Task RegisterNewUser(User user)
+        public async Task RegisterNewUser(UserDto user)
         { 
             await repo.RegisterNewUser(user);
         }
 
         [HttpPatch("UpdateTicket")]
-        public async Task<Ticket> UpdateTicket(string ticketnumber, CarStatusEnum newCarStatus)
+        public async Task<TicketDto> UpdateTicket(string ticketnumber, CarStatusEnum newCarStatus, string car, string customerName)
         {
-            return await repo.UpdateTicket(ticketnumber, newCarStatus);
+            return await repo.UpdateTicket(ticketnumber, newCarStatus, car, customerName);
         }
 
 

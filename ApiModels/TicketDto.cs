@@ -5,9 +5,9 @@ using System.Text.Json.Serialization;
 
 namespace CarStatusAPI.ApiModels
 {
-    public class Ticket
+    public class TicketDto
     {
-        [JsonIgnore]
+        [BindNever]
         public string? Ticketnumber { get; set; }
 
         public required string CustomerName { get; set; }

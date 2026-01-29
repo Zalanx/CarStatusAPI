@@ -1,5 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
+using CarStatusAPI.DbModels;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace CarStatusAPI.Models
@@ -16,12 +18,15 @@ namespace CarStatusAPI.Models
         public string Username { get; set; }
 
         [Required]
-        [StringLength(30)]
         public string Password { get; set; }
 
+        [JsonIgnore]
         public string? Salt { get; set; }
 
         [Required]
         public bool IsAdmin { get; set; }
+
+        [Required]
+        public List<ToDoDto> ToDos { get; set; }
     }
 }

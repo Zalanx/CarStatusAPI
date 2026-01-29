@@ -6,14 +6,14 @@ namespace CarStatusAPI.Interface
 {
     public interface ICarStatus
     {
-        Task<List<Ticket>> GetAllTickets();
-        Task<Ticket> GetTicket(string ticketId);
-        Task<DbTicket> CreateNewTicket(Ticket ticket);
+        Task<List<TicketDto>> GetAllTickets();
+        Task<TicketDto> GetTicket(string ticketId);
+        Task<TicketDto> CreateNewTicket(CreateTicketDto ticket);
 
-        Task<Ticket> UpdateTicket(string ticketnumber, CarStatusEnum newCarStatus);
+        Task<TicketDto> UpdateTicket(string ticketnumber, CarStatusEnum newCarStatus, string car, string customerName);
 
-        Task<DbUser> LoginUser(User user);
-        Task RegisterNewUser(User user);
+        Task<DbUser> LoginUser(UserDto user);
+        Task RegisterNewUser(UserDto user);
 
     }
 }
