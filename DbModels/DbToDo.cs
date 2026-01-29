@@ -11,7 +11,8 @@ namespace CarStatusAPI.DbModels
         public int Id { get; set; }
 
         [Required]
-        public int DbUserId { get; set; }
+        public int DbTicketId { get; set; }
+
         [Required]
         public string Todo { get; set; }
 

@@ -10,7 +10,7 @@ namespace CarStatusAPI.Interface
         Task<TicketDto> GetTicket(string ticketId);
         Task<TicketDto> CreateNewTicket(CreateTicketDto ticket);
 
-        Task<TicketDto> UpdateTicket(string ticketnumber, int userId,CarStatusEnum newCarStatus, List<ToDoDto> todo, string car, string customerName);
+        Task<TicketDto> UpdateTicket(string ticketnumber, CarStatusEnum newCarStatus, List<ToDoDto> todo, string car, string customerName);
 
         Task<DbUser> LoginUser(UserDto user);
         Task RegisterNewUser(UserDto user);

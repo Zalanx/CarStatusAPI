@@ -48,18 +48,17 @@ namespace CarStatusAPI.Repository
             return createdTicket;
         }
 
-        public async Task<TicketDto> UpdateTicket(string ticketnumber, int userId , CarStatusEnum newCarStatus, List<ToDoDto> todos, string? car, string? customerName)
+        public async Task<TicketDto> UpdateTicket(string ticketnumber, CarStatusEnum newCarStatus, List<ToDoDto> todos, string? car, string? customerName)
         {
             List<DbToDos> dbToDos = new();
 
             var dbTicket = await dbContext.DbTickets.FirstOrDefaultAsync(t => t.Ticketnumber == ticketnumber) ?? throw new Exception($"Ticket not found with ticketnumber {ticketnumber}");
-            var dbUser = await dbContext.DbTickets.FirstOrDefaultAsync(u => u.Id == userId) ?? throw new KeyNotFoundException("User not found");
 
             foreach (var todo in todos)
             {
                 var dbToDoModel = new DbToDos()
                 {
-                    DbUserId = dbUser.Id,
+                    DbTicketId = dbTicket.Id,
                     Todo = todo.Task,
                     done = todo.Done
 

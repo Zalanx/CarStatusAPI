@@ -45,9 +45,9 @@ namespace CarStatusAPI.Controller
         }
 
         [HttpPatch("UpdateTicket")]
-        public async Task<TicketDto> UpdateTicket(string ticketnumber,int userId, CarStatusEnum newCarStatus,  List<ToDoDto> todos, string car, string customerName)
+        public async Task<TicketDto> UpdateTicket(string ticketnumber, CarStatusEnum newCarStatus,  List<ToDoDto> todos, string car, string customerName)
         {
-            return await repo.UpdateTicket(ticketnumber, userId, newCarStatus, todos, car, customerName);
+            return await repo.UpdateTicket(ticketnumber, newCarStatus, todos, car, customerName);
         }
 
 
