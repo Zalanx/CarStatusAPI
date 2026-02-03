@@ -30,13 +30,18 @@ namespace CarStatusAPI.Repository
 
             var newTicketNumber = await helper.NewTicketNumber();
 
+            var newToDolist= new ToDoDto()
+            {
+                Done = ticket.ToDos
+            }
+
             var createdTicket = new TicketDto()
             {
                 Ticketnumber = newTicketNumber,
                 CustomerName = ticket.CustomerName,
                 Car = ticket.Car,
                 CarStatus = CarStatusEnum.Warteschlange,
-                ToDos = ticket.ToDos
+                ToDos = 
             };
 
             var CreatedDbTicket = mapper.Map<DbTicket>(createdTicket);

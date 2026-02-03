@@ -10,6 +10,6 @@ namespace CarStatusAPI.ApiModels
 
         public CarStatusEnum CarStatus { get; set; }
 
-        public required List<string> ToDos { get; set; }
+        public required List<ToDoDto> ToDos { get; set; }
     }
 }
