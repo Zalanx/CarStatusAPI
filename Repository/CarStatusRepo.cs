@@ -27,12 +27,19 @@ namespace CarStatusAPI.Repository
 
         public async Task<TicketDto> CreateNewTicket(CreateTicketDto ticket)
         {
+            var toDoDtoList = new List<ToDoDto>();
 
             var newTicketNumber = await helper.NewTicketNumber();
 
-            var newToDolist= new ToDoDto()
+            foreach (var todo in ticket.ToDos)
             {
-                Done = ticket.ToDos
+                var newTodo = new ToDoDto()
+                {
+                    Done = todo.Done,
+                    Task = todo.Task
+                };
+
+                toDoDtoList.Add(newTodo);
             }
 
             var createdTicket = new TicketDto()
@@ -41,7 +48,7 @@ namespace CarStatusAPI.Repository
                 CustomerName = ticket.CustomerName,
                 Car = ticket.Car,
                 CarStatus = CarStatusEnum.Warteschlange,
-                ToDos = 
+                ToDos = toDoDtoList
             };
 
             var CreatedDbTicket = mapper.Map<DbTicket>(createdTicket);
