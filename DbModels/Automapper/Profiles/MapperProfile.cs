@@ -14,6 +14,8 @@ namespace DiabloModels.AutoMapper.Profiles
             CreateMap<DbTicket, TicketDto>().ReverseMap();
             CreateMap<DbUser, UserDto>().ReverseMap();
             CreateMap<DbTicketnumber, Ticketnumber>().ReverseMap();
+            CreateMap<DbToDos, ToDoDto>().ReverseMap();
+
 
         }
     }
