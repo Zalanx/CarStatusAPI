@@ -79,7 +79,6 @@ namespace CarStatusAPI.Repository
                 var dbToDoModel = new DbToDos()
                 {
                     DbTicketId = dbTicket.Id,
-                    Todo = todo.Task,
                     done = todo.Done
 
                 };
