@@ -13,9 +13,17 @@ namespace CarStatusAPI.Repository
 
         public async Task<List<TicketDto>> GetAllTickets()
         {
-            var dbTicket = await dbContext.DbTickets.ToListAsync();
 
-            return mapper.Map<List<TicketDto>>(dbTicket);
+
+            var dbTickets = await dbContext.DbTickets.ToListAsync();
+
+            foreach (var ticket in dbTickets)
+            {
+                ticket.ToDos = await dbContext.DbToDos.Where(t => t.DbTicketId == ticket.Id).ToListAsync();
+            }
+
+            
+            return mapper.Map<List<TicketDto>>(dbTickets);
         }
 
         public async Task<TicketDto> GetTicket(string ticketNumber)

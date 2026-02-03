@@ -4,6 +4,7 @@ using CarStatusAPI.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CarStatusAPI.Migrations
 {
     [DbContext(typeof(CarStatusDbContext))]
-    partial class CarStatusDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260203145924_foreignkeywithtodo")]
+    partial class foreignkeywithtodo
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -135,13 +138,11 @@ namespace CarStatusAPI.Migrations
 
             modelBuilder.Entity("CarStatusAPI.DbModels.DbToDos", b =>
                 {
-                    b.HasOne("CarStatusAPI.Models.DbTicket", "Ticket")
+                    b.HasOne("CarStatusAPI.Models.DbTicket", null)
                         .WithMany("ToDos")
                         .HasForeignKey("DbTicketId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Ticket");
                 });
 
             modelBuilder.Entity("CarStatusAPI.Models.DbTicket", b =>
