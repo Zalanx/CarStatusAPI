@@ -10,11 +10,10 @@ namespace CarStatusAPI.Repository
 {
     public class CarStatusRepo(CarStatusDbContext dbContext, IMapper mapper, CarStatusRepoHelper helper) : ICarStatus
     {
+        private DbUser loggedInUser;
 
         public async Task<List<TicketDto>> GetAllTickets()
         {
-
-
             var dbTickets = await dbContext.DbTickets.ToListAsync();
 
             foreach (var ticket in dbTickets)
@@ -31,6 +30,16 @@ namespace CarStatusAPI.Repository
             var dbTicket = await dbContext.DbTickets.FirstOrDefaultAsync(t => t.Ticketnumber == ticketNumber) ?? throw new Exception("No ticket found with this Ticket number");
 
             return mapper.Map<TicketDto>(dbTicket);
+        }
+
+        public async Task<List<TicketDto>> GetTicketsForUserById(int userId)
+        {
+            var loggedInUser = dbContext.DbUsers.FirstOrDefaultAsync(u => u.Id == userId) ?? throw new KeyNotFoundException("User not found, wrong ID");
+
+            //var ticketsForUser = dbContext.DbTickets.Where(Hier muss userid = loggedInUser.id);
+
+
+            throw new NotImplementedException();
         }
 
         public async Task<TicketDto> CreateNewTicket(CreateTicketDto ticket)
@@ -56,7 +65,8 @@ namespace CarStatusAPI.Repository
                 CustomerName = ticket.CustomerName,
                 Car = ticket.Car,
                 CarStatus = CarStatusEnum.Warteschlange,
-                ToDos = toDoDtoList
+                ToDos = toDoDtoList,
+                UserId = loggedInUser.Id // noch gedanken machen ob funktion die mein wert ändert 
             };
 
             var CreatedDbTicket = mapper.Map<DbTicket>(createdTicket);
@@ -110,6 +120,7 @@ namespace CarStatusAPI.Repository
                 throw new Exception("Wrong password");
             }
 
+            loggedInUser = dbUser;
             return dbUser;
         }
 

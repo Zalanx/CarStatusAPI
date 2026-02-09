@@ -16,6 +16,9 @@ namespace CarStatusAPI.Models
         [StringLength(50)]
         public string Ticketnumber { get; set; }
 
+        [ForeignKey("User")]
+        public int UserId { get; set; }
+
         [Required]
         [StringLength(50)]
         public string CustomerName { get; set; }
@@ -28,6 +31,8 @@ namespace CarStatusAPI.Models
         public CarStatusEnum CarStatus { get; set; }
         
         public ICollection<DbToDos> ToDos { get; set; } = new List<DbToDos>();
+
+        public DbUser User { get; set; }
 
     }
 }

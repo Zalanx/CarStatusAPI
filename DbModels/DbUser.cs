@@ -25,5 +25,8 @@ namespace CarStatusAPI.Models
 
         [Required]
         public bool IsAdmin { get; set; }
+
+        public List<DbTicket> Tickets { get; set; }
+
     }
 }
