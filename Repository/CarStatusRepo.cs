@@ -34,12 +34,33 @@ namespace CarStatusAPI.Repository
 
         public async Task<List<TicketDto>> GetTicketsForUserById(int userId)
         {
-            var loggedInUser = dbContext.DbUsers.FirstOrDefaultAsync(u => u.Id == userId) ?? throw new KeyNotFoundException("User not found, wrong ID");
+            List<TicketDto> returnableList = new();
 
-            //var ticketsForUser = dbContext.DbTickets.Where(Hier muss userid = loggedInUser.id);
+            var loggedInUser = await dbContext.DbUsers.FirstOrDefaultAsync(u => u.Id == userId) ?? throw new KeyNotFoundException("User not found, wrong ID");
 
+            var ticketsForUser = await dbContext.DbTickets.Where(t => t.UserId == loggedInUser.Id)
+                .Include(dbTicket => dbTicket.ToDos).ToListAsync();
 
-            throw new NotImplementedException();
+            foreach (var ticket in ticketsForUser)
+            {
+                var returnableTicket = new TicketDto()
+                {
+                    Ticketnumber = ticket.Ticketnumber,
+                    Car = ticket.Car,
+                    CustomerName = ticket.CustomerName,
+                    CarStatus = ticket.CarStatus,
+                    UserId = ticket.UserId,
+                    ToDos = ticket.ToDos.Select(t => new ToDoDto()
+                    {
+                        Task = t.Todo,
+                        Done = t.done,
+                    }).ToList()
+                };
+
+                returnableList.Add(returnableTicket);
+            }
+
+            return returnableList;
         }
 
         public async Task<TicketDto> CreateNewTicket(CreateTicketDto ticket)
