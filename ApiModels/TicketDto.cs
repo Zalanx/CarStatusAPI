@@ -10,7 +10,7 @@ namespace CarStatusAPI.ApiModels
         [BindNever]
         public string? Ticketnumber { get; set; }
 
-        public required int UserId { get; set; }
+        public required int? UserId { get; set; }
 
         public required string CustomerName { get; set; }
 

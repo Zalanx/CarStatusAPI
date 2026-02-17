@@ -1,10 +1,8 @@
 ﻿using AutoMapper;
 using CarStatusAPI.ApiModels;
-using CarStatusAPI.DbModels;
 using CarStatusAPI.Models;
 
-
-namespace DiabloModels.AutoMapper.Profiles
+namespace CarStatusAPI.DbModels.Automapper.Profiles
 {
     public class MapperProfile : Profile
     {

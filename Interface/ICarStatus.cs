@@ -8,10 +8,10 @@ namespace CarStatusAPI.Interface
     {
         Task<List<TicketDto>> GetAllTickets();
         Task<TicketDto> GetTicket(string ticketId);
+        Task<List<TicketDto>> GetTicketsForUserById(int userId);
+        Task<int> GetUserIdByUsername(string username);
         Task<TicketDto> CreateNewTicket(CreateTicketDto ticket);
-
         Task<TicketDto> UpdateTicket(string ticketnumber, CarStatusEnum newCarStatus, List<ToDoDto> todo, string car, string customerName);
-
         Task<DbUser> LoginUser(UserDto user);
         Task RegisterNewUser(UserDto user);
 

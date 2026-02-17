@@ -10,8 +10,6 @@ namespace CarStatusAPI.Repository
 {
     public class CarStatusRepo(CarStatusDbContext dbContext, IMapper mapper, CarStatusRepoHelper helper) : ICarStatus
     {
-        private DbUser loggedInUser;
-
         public async Task<List<TicketDto>> GetAllTickets()
         {
             var dbTickets = await dbContext.DbTickets.ToListAsync();
@@ -36,9 +34,9 @@ namespace CarStatusAPI.Repository
         {
             List<TicketDto> returnableList = new();
 
-            var loggedInUser = await dbContext.DbUsers.FirstOrDefaultAsync(u => u.Id == userId) ?? throw new KeyNotFoundException("User not found, wrong ID");
+            var user = await dbContext.DbUsers.FirstOrDefaultAsync(u => u.Id == userId) ?? throw new KeyNotFoundException("User not found, wrong ID");
 
-            var ticketsForUser = await dbContext.DbTickets.Where(t => t.UserId == loggedInUser.Id)
+            var ticketsForUser = await dbContext.DbTickets.Where(t => t.UserId == user.Id)
                 .Include(dbTicket => dbTicket.ToDos).ToListAsync();
 
             foreach (var ticket in ticketsForUser)
@@ -61,6 +59,13 @@ namespace CarStatusAPI.Repository
             }
 
             return returnableList;
+        }
+
+        public async Task<int> GetUserIdByUsername(string username)
+        {
+            var user = await dbContext.DbUsers.FirstOrDefaultAsync(u => u.Username.ToLower() == username.ToLower()) ?? throw new KeyNotFoundException("Username wrong");
+
+            return user.Id;
         }
 
         public async Task<TicketDto> CreateNewTicket(CreateTicketDto ticket)
@@ -87,7 +92,7 @@ namespace CarStatusAPI.Repository
                 Car = ticket.Car,
                 CarStatus = CarStatusEnum.Warteschlange,
                 ToDos = toDoDtoList,
-                UserId = loggedInUser.Id // noch gedanken machen ob funktion die mein wert ändert 
+                UserId = ticket.UserId 
             };
 
             var CreatedDbTicket = mapper.Map<DbTicket>(createdTicket);
@@ -101,20 +106,16 @@ namespace CarStatusAPI.Repository
 
         public async Task<TicketDto> UpdateTicket(string ticketnumber, CarStatusEnum newCarStatus, List<ToDoDto> todos, string? car, string? customerName)
         {
-            List<DbToDos> dbToDos = new();
+            var dbTicket = await dbContext.DbTickets.Include(t => t.ToDos).FirstOrDefaultAsync(t => t.Ticketnumber == ticketnumber) ?? throw new Exception($"Ticket not found with ticketnumber {ticketnumber}");
 
-            var dbTicket = await dbContext.DbTickets.FirstOrDefaultAsync(t => t.Ticketnumber == ticketnumber) ?? throw new Exception($"Ticket not found with ticketnumber {ticketnumber}");
-
-            foreach (var todo in todos)
+            foreach (var todo in dbTicket.ToDos)
             {
-                var dbToDoModel = new DbToDos()
+                var comparedTodo = todos.FirstOrDefault(x => x.Task == todo.Todo);
+
+                if (comparedTodo != null)
                 {
-                    DbTicketId = dbTicket.Id,
-                    done = todo.Done
-
-                };
-
-                dbToDos.Add(dbToDoModel);
+                    todo.done = comparedTodo.Done;
+                }
             }
 
             
@@ -122,7 +123,6 @@ namespace CarStatusAPI.Repository
             dbTicket.CarStatus = newCarStatus;
             dbTicket.Car = car ?? dbTicket.Car;
             dbTicket.CustomerName = customerName ?? dbTicket.CustomerName;
-            dbTicket.ToDos = dbToDos;
             await dbContext.SaveChangesAsync();
 
             return mapper.Map<TicketDto>(dbTicket);
@@ -141,7 +141,6 @@ namespace CarStatusAPI.Repository
                 throw new Exception("Wrong password");
             }
 
-            loggedInUser = dbUser;
             return dbUser;
         }
 

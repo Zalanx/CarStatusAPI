@@ -4,6 +4,7 @@ namespace CarStatusAPI.ApiModels
 {
     public class CreateTicketDto
     {
+        public required int UserId { get; set; }
         public required string CustomerName { get; set; }
 
         public required string Car { get; set; }
