@@ -50,6 +50,7 @@ namespace CarStatusAPI.Repository
                     UserId = ticket.UserId,
                     ToDos = ticket.ToDos.Select(t => new ToDoDto()
                     {
+                        Id = t.Id,
                         Task = t.Todo,
                         Done = t.done,
                     }).ToList()
@@ -73,11 +74,14 @@ namespace CarStatusAPI.Repository
             var toDoDtoList = new List<ToDoDto>();
 
             var newTicketNumber = await helper.NewTicketNumber();
+            var highestIdInToDo = dbContext.DbToDos.Max(x => x.Id);
+            
 
             foreach (var todo in ticket.ToDos)
             {
                 var newTodo = new ToDoDto()
                 {
+                    Id = highestIdInToDo++,
                     Done = todo.Done,
                     Task = todo.Task
                 };
@@ -95,10 +99,10 @@ namespace CarStatusAPI.Repository
                 UserId = ticket.UserId 
             };
 
-            var CreatedDbTicket = mapper.Map<DbTicket>(createdTicket);
+            var createdDbTicket = mapper.Map<DbTicket>(createdTicket);
 
 
-            dbContext.DbTickets.Add(CreatedDbTicket);
+            dbContext.DbTickets.Add(createdDbTicket);
             await dbContext.SaveChangesAsync();
 
             return createdTicket;
