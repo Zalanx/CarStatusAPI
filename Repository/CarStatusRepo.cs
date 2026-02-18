@@ -81,7 +81,7 @@ namespace CarStatusAPI.Repository
             {
                 var newTodo = new ToDoDto()
                 {
-                    Id = highestIdInToDo++,
+                    Id = highestIdInToDo += 1,
                     Done = todo.Done,
                     Task = todo.Task
                 };
