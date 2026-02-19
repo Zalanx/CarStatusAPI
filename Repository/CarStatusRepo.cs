@@ -25,7 +25,7 @@ namespace CarStatusAPI.Repository
 
         public async Task<TicketDto> GetTicket(string ticketNumber)
         {
-            var dbTicket = await dbContext.DbTickets.FirstOrDefaultAsync(t => t.Ticketnumber == ticketNumber) ?? throw new Exception("No ticket found with this Ticket number");
+            var dbTicket = await dbContext.DbTickets.Include(x => x.ToDos).FirstOrDefaultAsync(t => t.Ticketnumber == ticketNumber) ?? throw new Exception("No ticket found with this Ticket number");
 
             return mapper.Map<TicketDto>(dbTicket);
         }
@@ -109,6 +109,7 @@ namespace CarStatusAPI.Repository
         }
 
         public async Task<TicketDto> UpdateTicket(string ticketnumber, CarStatusEnum newCarStatus, List<ToDoDto> todos, string? car, string? customerName)
+        
         {
             var dbTicket = await dbContext.DbTickets.Include(t => t.ToDos).FirstOrDefaultAsync(t => t.Ticketnumber == ticketnumber) ?? throw new Exception($"Ticket not found with ticketnumber {ticketnumber}");
 

@@ -21,9 +21,9 @@ namespace CarStatusAPI.Controller
 
 
         [HttpGet("GetTicketById")]
-        public async Task<TicketDto> GetTicket(string ticketId)
+        public async Task<TicketDto> GetTicket(string ticketNumber)
         {
-            return await repo.GetTicket(ticketId);
+            return await repo.GetTicket(ticketNumber);
         }
 
         [HttpGet("GetTicketsForUserById")]
